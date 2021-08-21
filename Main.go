@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"os"
 	"time"
 
 	"github.com/gorilla/mux"
@@ -119,5 +120,9 @@ func main() {
 	router.HandleFunc("/people", GetPeopleEndpoint).Methods("GET")
 	router.HandleFunc("/person/{id}", GetPersonEndpoint).Methods("GET")
 	router.HandleFunc("/person/email", GetPersonEndpointByEmail).Methods("GET")
-	http.ListenAndServe(":12345", router)
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "12345" // Default port if not specified
+	}
+	http.ListenAndServe(":"+port, router)
 }
