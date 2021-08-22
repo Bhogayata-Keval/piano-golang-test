@@ -125,9 +125,8 @@ func main() {
 	if port == "" {
 		port = "12345" // Default port if not specified
 	}
-	http.ListenAndServe(":"+port, 
+	http.ListenAndServe(":"+port,
 		handlers.CORS(handlers.AllowedHeaders([]string{"X-Requested-With", "Content-Type", "Authorization"}),
-	 	handlers.AllowedMethods([]string{"GET", "POST", "PUT", "HEAD", "OPTIONS"}),
-	  	handlers.AllowedOrigins([]string{"*"}))(router)
-	)
+			handlers.AllowedMethods([]string{"GET", "POST", "PUT", "HEAD", "OPTIONS"}),
+			handlers.AllowedOrigins([]string{"*"}))(router))
 }
