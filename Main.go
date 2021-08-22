@@ -8,6 +8,7 @@ import (
 	"os"
 	"time"
 
+	"github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
@@ -124,5 +125,9 @@ func main() {
 	if port == "" {
 		port = "12345" // Default port if not specified
 	}
-	http.ListenAndServe(":"+port, router)
+	http.ListenAndServe(":"+port, 
+		handlers.CORS(handlers.AllowedHeaders([]string{"X-Requested-With", "Content-Type", "Authorization"}),
+	 	handlers.AllowedMethods([]string{"GET", "POST", "PUT", "HEAD", "OPTIONS"}),
+	  	handlers.AllowedOrigins([]string{"*"}))(router)
+	)
 }
